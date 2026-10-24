@@ -13,44 +13,10 @@ A free, responsive username generator built with **HTML, CSS, and vanilla JavaSc
 - **Responsive design:** Works on desktop and mobile screens
 - **No backend:** No account, API key, database, or build tools required
 
-## Live demo with GitHub Pages
+## SITE
 
-1. Create a public GitHub repository named `nameforge-generator`.
-2. Upload `index.html` and `README.md` to the repository root.
-3. Open **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select the `main` branch and `/(root)` folder, then save.
-6. After deployment, your site should be available at:
+https://nakah200.github.io/nameforge/
 
-   `https://YOUR-USERNAME.github.io/nameforge/`
-
-Replace `YOUR-USERNAME` with your GitHub username. GitHub Pages may take a few minutes to publish the first deployment.
-
-## Run locally
-
-Download or clone this repository, then open `index.html` in a browser. A local development server is optional.
-
-```bash
-git clone https://github.com/Nakah200/nameforge.git
-cd nameforge-generator
-```
-
-Then open `index.html`.
-
-## Project structure
-
-```text
-nameforge-generator/
-├── index.html
-└── README.md
-```
-
-## Tech stack
-
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- Browser `localStorage` for favourites
 
 ## Limitations
 
