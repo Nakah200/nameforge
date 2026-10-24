@@ -22,7 +22,7 @@ A free, responsive username generator built with **HTML, CSS, and vanilla JavaSc
 5. Select the `main` branch and `/(root)` folder, then save.
 6. After deployment, your site should be available at:
 
-   `https://YOUR-USERNAME.github.io/nameforge-generator/`
+   `https://YOUR-USERNAME.github.io/nameforge/`
 
 Replace `YOUR-USERNAME` with your GitHub username. GitHub Pages may take a few minutes to publish the first deployment.
 
@@ -31,7 +31,7 @@ Replace `YOUR-USERNAME` with your GitHub username. GitHub Pages may take a few m
 Download or clone this repository, then open `index.html` in a browser. A local development server is optional.
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/nameforge-generator.git
+git clone https://github.com/Nakah200/nameforge.git
 cd nameforge-generator
 ```
 
