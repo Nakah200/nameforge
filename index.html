@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100d19">
+  <meta name="description" content="NameForge is a free username generator for gaming, aesthetic, developer, and random usernames.">
+  <title>NameForge — Username Generator</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #100d19;
+      --panel: rgba(28, 23, 40, .92);
+      --border: #393047;
+      --text: #f5f3ff;
+      --muted: #a8a0b9;
+      --purple: #9b72f2;
+      --purple-dark: #7543d6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 28px 16px 40px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 50% -15%, rgba(124, 58, 237, .30), transparent 55%),
+        var(--bg);
+    }
+    .wrap { width: min(100%, 760px); margin: 0 auto; }
+    header { text-align: center; padding: 28px 0 24px; }
+    .mark {
+      display: inline-grid; place-items: center; width: 46px; height: 46px;
+      border-radius: 15px; margin-bottom: 12px;
+      color: white; font-weight: 900; font-size: 23px;
+      background: linear-gradient(135deg, #a78bfa, #6d28d9);
+      box-shadow: 0 8px 32px rgba(139, 92, 246, .28);
+    }
+    h1 { margin: 0; font-size: clamp(32px, 7vw, 46px); letter-spacing: -1.8px; }
+    h1 span { color: #b69aff; }
+    header p { margin: 10px 0 0; color: var(--muted); }
+    .panel {
+      padding: 22px; margin-bottom: 16px; border-radius: 18px;
+      background: var(--panel); border: 1px solid var(--border);
+      box-shadow: 0 14px 40px rgba(0,0,0,.12);
+    }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    h2 { margin: 0 0 15px; font-size: 17px; }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    label { display: block; margin: 14px 0 7px; color: #c9c2d8; font-size: 13px; }
+    input, select {
+      width: 100%; min-height: 44px; padding: 11px 12px;
+      border-radius: 10px; border: 1px solid #443951;
+      background: #120f1b; color: var(--text); font: inherit;
+      outline: none;
+    }
+    input:focus, select:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(155,114,242,.15); }
+    button {
+      border: 0; border-radius: 10px; padding: 11px 14px;
+      font: inherit; font-weight: 700; cursor: pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    button:active { transform: scale(.98); }
+    .primary { width: 100%; margin-top: 18px; color: white; background: var(--purple-dark); }
+    .primary:hover { background: #8657e8; }
+    .secondary { color: #f1eaff; background: #332844; border: 1px solid #4a3b5f; }
+    .secondary:hover { background: #423255; }
+    .results { display: grid; gap: 9px; }
+    .result {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      min-width: 0; padding: 12px; border-radius: 11px;
+      background: #211b2d; border: 1px solid #372c46;
+    }
+    .name { overflow-wrap: anywhere; font-size: 14px; font-weight: 700; }
+    .actions { display: flex; flex-shrink: 0; gap: 6px; }
+    .actions button { padding: 8px 10px; font-size: 12px; }
+    .empty { padding: 14px 0; color: var(--muted); font-size: 13px; }
+    .status { min-height: 18px; margin: 12px 0 0; color: #c4b5fd; font-size: 13px; }
+    .subtle { color: var(--muted); font-size: 12px; }
+    footer { padding: 18px 0 0; color: #837b95; text-align: center; font-size: 12px; }
+    footer a { color: #c4b5fd; text-decoration: none; }
+    @media (max-width: 520px) {
+      body { padding: 14px 12px 28px; }
+      header { padding-top: 20px; }
+      .panel { padding: 16px; }
+      .field-grid { grid-template-columns: 1fr; gap: 0; }
+      .result { align-items: flex-start; }
+      .actions button { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="mark" aria-hidden="true">N</div>
+      <h1>Name<span>Forge</span></h1>
+      <p>Forge your next identity.</p>
+    </header>
+
+    <section class="panel" aria-labelledby="generator-title">
+      <h2 id="generator-title">Username Generator</h2>
+      <div class="field-grid">
+        <div>
+          <label for="category">Username style</label>
+          <select id="category">
+            <option value="gaming">Gaming</option>
+            <option value="aesthetic">Aesthetic</option>
+            <option value="developer">Developer</option>
+            <option value="random">Random</option>
+          </select>
+        </div>
+        <div>
+          <label for="length">Maximum length</label>
+          <select id="length">
+            <option value="8">8 characters</option>
+            <option value="12" selected>12 characters</option>
+            <option value="16">16 characters</option>
+            <option value="20">20 characters</option>
+          </select>
+        </div>
+      </div>
+      <label for="prefix">Custom prefix (optional)</label>
+      <input id="prefix" maxlength="12" placeholder="e.g. Nakah" autocomplete="off">
+      <div class="field-grid">
+        <div>
+          <label for="amount">Number of names</label>
+          <select id="amount">
+            <option value="5">5 names</option>
+            <option value="10" selected>10 names</option>
+            <option value="20">20 names</option>
+          </select>
+        </div>
+        <div>
+          <label for="numbers">Numbers</label>
+          <select id="numbers">
+            <option value="mixed" selected>Mixed styles</option>
+            <option value="yes">Include numbers</option>
+            <option value="no">No numbers</option>
+          </select>
+        </div>
+      </div>
+      <button class="primary" id="generate">✦ Generate Names</button>
+    </section>
+
+    <section class="panel" aria-labelledby="results-title">
+      <div class="panel-head">
+        <h2 id="results-title">Your results</h2>
+        <button class="secondary" id="copy-all" type="button">Copy all</button>
+      </div>
+      <div class="results" id="results" aria-live="polite">
+        <div class="empty">Choose a style and generate your first usernames.</div>
+      </div>
+      <p class="status" id="status" role="status"></p>
+    </section>
+
+    <section class="panel" aria-labelledby="favourites-title">
+      <div class="panel-head">
+        <h2 id="favourites-title">★ Favourites</h2>
+        <button class="secondary" id="clear-favourites" type="button">Clear</button>
+      </div>
+      <div class="results" id="favourites">
+        <div class="empty">Your saved names will appear here.</div>
+      </div>
+    </section>
+
+    <footer>
+      NameForge is free to use. Username availability is not checked.
+      <br>Built with HTML, CSS and JavaScript.
+    </footer>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const words = {
+      gaming: ["Shadow", "Blaze", "Phantom", "Rogue", "Frost", "Storm", "Nova", "Viper", "Pixel", "Ghost", "Nexus", "Venom", "Raven", "Striker"],
+      aesthetic: ["Luna", "Velvet", "Cloud", "Dream", "Bloom", "Echo", "Misty", "Aura", "Opal", "Dusk", "Ivy", "Sage", "Willow", "Star"],
+      developer: ["Byte", "Code", "Stack", "Script", "Logic", "Dev", "Debug", "Pixel", "Syntax", "Core", "Loop", "Node", "Build", "Data"],
+      random: ["Quantum", "Cosmic", "Turbo", "Neon", "Orbit", "Comet", "Mystic", "Hyper", "Solar", "Zen", "Flux", "Cyber", "Astro", "Echo"]
+    };
+    const endings = ["X", "YT", "Pro", "Z", "GG", "404", "One", "Wave", "Hub", "Zero", "HQ", "Plays"];
+    let lastNames = [];
+    let favourites = [];
+
+    try {
+      const stored = JSON.parse(localStorage.getItem("nameforge-favourites") || "[]");
+      if (Array.isArray(stored)) favourites = stored.filter(x => typeof x === "string");
+    } catch { favourites = []; }
+
+    function createName() {
+      const category = $("category").value;
+      const max = Number($("length").value);
+      const prefix = $("prefix").value.trim().replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 12);
+      const numberMode = $("numbers").value;
+      const list = words[category];
+
+      for (let attempt = 0; attempt < 100; attempt++) {
+        const first = list[Math.floor(Math.random() * list.length)];
+        const second = list[Math.floor(Math.random() * list.length)];
+        const ending = endings[Math.floor(Math.random() * endings.length)];
+        const choice = Math.random();
+        let base;
+
+        if (numberMode === "yes") {
+          base = first + Math.floor(Math.random() * 1000);
+        } else if (numberMode === "no") {
+          base = choice < 0.5 ? first + second : first + ending.replace(/[0-9]/g, "");
+        } else {
+          base = choice < 0.34 ? first + ending : choice < 0.67 ? first + Math.floor(Math.random() * 1000) : first + second;
+        }
+
+        const name = prefix + base;
+        if (name.length <= max && name.length > 0) return name;
+      }
+
+      const fallback = list.find(word => (prefix + word).length <= max) || "Nova";
+      return (prefix + fallback).slice(0, max);
+    }
+
+    function generateNames() {
+      const count = Number($("amount").value);
+      const names = new Set();
+      let attempts = 0;
+      while (names.size < count && attempts < count * 100) {
+        names.add(createName());
+        attempts++;
+      }
+      lastNames = [...names];
+      renderResults();
+      setStatus(`${lastNames.length} username${lastNames.length === 1 ? "" : "s"} generated.`);
+    }
+
+    function setStatus(message) { $("status").textContent = message; }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        setStatus("Copied to clipboard.");
+      } catch {
+        setStatus("Copy failed. Your browser may block clipboard access.");
+      }
+    }
+
+    function saveFavourites() {
+      try { localStorage.setItem("nameforge-favourites", JSON.stringify(favourites)); }
+      catch { setStatus("Could not save favourites in this browser."); }
+    }
+
+    function makeResultRow(name, isFavourite = false) {
+      const row = document.createElement("div");
+      row.className = "result";
+      const label = document.createElement("span");
+      label.className = "name";
+      label.textContent = name;
+
+      const actions = document.createElement("div");
+      actions.className = "actions";
+
+      const copy = document.createElement("button");
+      copy.className = "secondary";
+      copy.type = "button";
+      copy.textContent = "Copy";
+      copy.addEventListener("click", () => copyText(name));
+
+      const star = document.createElement("button");
+      star.className = "secondary";
+      star.type = "button";
+      star.textContent = isFavourite ? "Remove ★" : (favourites.includes(name) ? "Saved ★" : "☆ Save");
+      star.addEventListener("click", () => {
+        if (favourites.includes(name)) favourites = favourites.filter(item => item !== name);
+        else favourites.push(name);
+        saveFavourites();
+        renderFavourites();
+        renderResults();
+      });
+
+      actions.append(copy, star);
+      row.append(label, actions);
+      return row;
+    }
+
+    function renderResults() {
+      const box = $("results");
+      box.replaceChildren();
+      if (!lastNames.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "Choose a style and generate your first usernames.";
+        box.append(empty);
+        return;
+      }
+      lastNames.forEach(name => box.append(makeResultRow(name)));
+    }
+
+    function renderFavourites() {
+      const box = $("favourites");
+      box.replaceChildren();
+      if (!favourites.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "Your saved names will appear here.";
+        box.append(empty);
+        return;
+      }
+      favourites.forEach(name => box.append(makeResultRow(name, true)));
+    }
+
+    $("generate").addEventListener("click", generateNames);
+    $("copy-all").addEventListener("click", () => {
+      if (!lastNames.length) { setStatus("Generate some names first."); return; }
+      copyText(lastNames.join("\n"));
+    });
+    $("clear-favourites").addEventListener("click", () => {
+      favourites = [];
+      saveFavourites();
+      renderFavourites();
+      renderResults();
+      setStatus("Favourites cleared.");
+    });
+
+    renderFavourites();
+  </script>
+</body>
+</html>
